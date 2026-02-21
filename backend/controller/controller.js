@@ -1,4 +1,4 @@
-const Task = require("../model/Task")
+const Task = require("../models/Task")
 
 //create a task
 exports.createTask = async (req, res) => {
@@ -27,8 +27,8 @@ exports.updateTask = async (req, res) => {
         return res.status(404).json({ message: "Task not found" });
     }
     task.title = req.body.title || task.title;
-    task.description = req.body.description || task.completed;
-    task.completed = req.body.completed || task.completed;
+    task.description = req.body.description || task.description;
+    task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
     const updatedTask = await task.save();
     res.status(200).json(updatedTask);
 
